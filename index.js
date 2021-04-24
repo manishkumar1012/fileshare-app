@@ -5,6 +5,8 @@ const bgProgress = document.querySelector('.bg-progress');
 const percentDiv = document.querySelector('#percent');
 const progressBar = document.querySelector('.progress-bar');
 const progressContainer = document.querySelector('.progress-container');
+const fileURL = document.querySelector('#fileURL');
+const sharingContainer = document.querySelector('.sharing-container');
 
 // const host = 'https://fileshare-api-by-manish.herokuapp.com';
 const host = 'http://localhost:3000';
@@ -52,6 +54,7 @@ const uploadFile = () => {
     xhr.onreadystatechange = () => {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             console.log(xhr.response);
+            showLink(JSON.parse(xhr.response));
         }
     }
 
@@ -66,4 +69,11 @@ const updateProgress = (e) => {
     bgProgress.style.width = `${percent}%`;
     percentDiv.innerText = percent;
     progressBar.style.transform = `scaleX(${percent / 100})`;
+}
+
+const showLink = ({ file: url }) => {
+    console.log(url);
+    progressContainer.style.display = 'none';
+    sharingContainer.style.display = 'block';
+    fileURL.value = url;
 }
