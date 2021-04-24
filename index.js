@@ -1,6 +1,11 @@
 const dropZone = document.querySelector('.drop-zone');
 const fileInput = document.querySelector('#fileInput');
 const browseBtn = document.querySelector('#browseBtn');
+const bgProgress = document.querySelector('.bg-progress');
+
+// const host = 'https://fileshare-api-by-manish.herokuapp.com';
+const host = 'http://localhost:3000';
+const fileUploadUrl = `${host}/api/files`;
 
 dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -21,9 +26,39 @@ dropZone.addEventListener('drop', (e) => {
     const files = e.dataTransfer.files;
     if (files.length) {
         fileInput.files = files;
+        uploadFile();
     }
 });
 
 browseBtn.addEventListener('click', () => {
     fileInput.click();
 });
+
+fileInput.addEventListener('change', () => {
+    uploadFile();
+});
+
+const uploadFile = () => {
+    // get the file from fileInput
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('myfile', file);
+
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            console.log(xhr.response);
+        }
+    }
+
+    xhr.upload.onprogress = updateProgress;
+
+    xhr.open('POST', fileUploadUrl);
+    xhr.send(formData);
+}
+
+const updateProgress = (e) => {
+    const percent = Math.round((e.loaded / e.total) * 100);
+    bgProgress.style.width = `${percent}%`;
+    console.log(percent);
+}
