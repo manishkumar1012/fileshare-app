@@ -5,8 +5,9 @@ const bgProgress = document.querySelector('.bg-progress');
 const percentDiv = document.querySelector('#percent');
 const progressBar = document.querySelector('.progress-bar');
 const progressContainer = document.querySelector('.progress-container');
-const fileURL = document.querySelector('#fileURL');
+const fileURLInput = document.querySelector('#fileURL');
 const sharingContainer = document.querySelector('.sharing-container');
+const copyBtn = document.querySelector('#copyBtn');
 
 // const host = 'https://fileshare-api-by-manish.herokuapp.com';
 const host = 'http://localhost:3000';
@@ -43,6 +44,11 @@ fileInput.addEventListener('change', () => {
     uploadFile();
 });
 
+copyBtn.addEventListener('click', () => {
+    fileURLInput.select();
+    document.execCommand('copy');
+})
+
 const uploadFile = () => {
     progressContainer.style.display = 'block';
     // get the file from fileInput
@@ -75,5 +81,5 @@ const showLink = ({ file: url }) => {
     console.log(url);
     progressContainer.style.display = 'none';
     sharingContainer.style.display = 'block';
-    fileURL.value = url;
+    fileURLInput.value = url;
 }
