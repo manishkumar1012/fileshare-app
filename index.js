@@ -2,6 +2,9 @@ const dropZone = document.querySelector('.drop-zone');
 const fileInput = document.querySelector('#fileInput');
 const browseBtn = document.querySelector('#browseBtn');
 const bgProgress = document.querySelector('.bg-progress');
+const percentDiv = document.querySelector('#percent');
+const progressBar = document.querySelector('.progress-bar');
+const progressContainer = document.querySelector('.progress-container');
 
 // const host = 'https://fileshare-api-by-manish.herokuapp.com';
 const host = 'http://localhost:3000';
@@ -39,6 +42,7 @@ fileInput.addEventListener('change', () => {
 });
 
 const uploadFile = () => {
+    progressContainer.style.display = 'block';
     // get the file from fileInput
     const file = fileInput.files[0];
     const formData = new FormData();
@@ -60,5 +64,6 @@ const uploadFile = () => {
 const updateProgress = (e) => {
     const percent = Math.round((e.loaded / e.total) * 100);
     bgProgress.style.width = `${percent}%`;
-    console.log(percent);
+    percentDiv.innerText = percent;
+    progressBar.style.transform = `scaleX(${percent / 100})`;
 }
