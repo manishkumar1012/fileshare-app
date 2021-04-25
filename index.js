@@ -8,6 +8,7 @@ const progressContainer = document.querySelector('.progress-container');
 const fileURLInput = document.querySelector('#fileURL');
 const sharingContainer = document.querySelector('.sharing-container');
 const copyBtn = document.querySelector('#copyBtn');
+const emailForm = document.querySelector("#emailForm");
 
 // const host = 'https://fileshare-api-by-manish.herokuapp.com';
 const host = 'http://localhost:3000';
@@ -83,3 +84,17 @@ const showLink = ({ file: url }) => {
     sharingContainer.style.display = 'block';
     fileURLInput.value = url;
 }
+
+emailForm.addEventListener("submit", (e) => {
+    e.preventDefault(); 
+
+    const url = fileURLInput.value;
+  
+    const formData = {
+      uuid: url.split("/").splice(-1, 1)[0],
+      emailTo: emailForm.elements["to-email"].value,
+      emailFrom: emailForm.elements["from-email"].value,
+    };
+    
+    console.log(formData);
+  });
