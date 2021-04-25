@@ -15,6 +15,8 @@ const host = 'http://localhost:3000';
 const fileUploadUrl = `${host}/api/files`;
 const emailURL = `${host}/api/files/send`;
 
+const maxAllowedSize = 100 * 1024 * 1024; //100mb
+
 dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
     console.log('dragging');
@@ -55,6 +57,13 @@ const uploadFile = () => {
     progressContainer.style.display = 'block';
     // get the file from fileInput
     const file = fileInput.files[0];
+
+    if (file.size > maxAllowedSize) {
+        console.log("Can't upload more than 100mb");
+        fileInput.value = '';
+        return;
+    }
+
     const formData = new FormData();
     formData.append('myfile', file);
 

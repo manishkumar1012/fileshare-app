@@ -19,6 +19,10 @@ body, .drop-zone, .upload-container{
     justify-content: center;
 }
 
+body {
+    flex-direction: row;
+}
+
 .upload-container {
     background: #ffffff;
     border-radius: 25px;
@@ -200,7 +204,7 @@ body, .drop-zone, .upload-container{
     outline: none;
   }
   
-.email-container .filed {
+.email-container .field {
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
@@ -216,4 +220,28 @@ body, .drop-zone, .upload-container{
     border-radius: 5px;
     color: #607d8b;
     cursor: pointer;
+}
+
+.upload-bg {
+    background: url(./upload\ background.svg) no-repeat center;
+    background-size: contain;
+    height: 50vh;
+    width: 50vw;
+}
+
+@media screen and (max-width: 900px) {
+    :root {
+      --container-width: 320px;
+    }
+    .upload-bg {
+      display: none;
+    }
+    .email-container .field
+ {
+      flex-direction: column;
+    }
+    .email-container .field
+ {
+      width: 300px;
+    }
 }
